@@ -14,6 +14,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     if ($unameErr=="" && $passErr=="") {
         if($uname == "test" && $password == "12345") {
             $loginSuccessUrl = $base_url.'loginSuccessPage.php';
+            header('Location: '.$loginSuccessUrl);
         } else {
             echo "Username or password is incorrect";
         }
@@ -26,7 +27,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     <body>
         <form action="" method="POST">
             Enter your username: <input type="text" name="uname"><br>
-            Enter your username: <input type="text" name="uname"><br>
+            Enter your username: <input type="password" name="password"><br>
             <input type="submit" value="submit">
         </form>
     </body>
