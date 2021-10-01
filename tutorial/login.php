@@ -1,6 +1,14 @@
 <?php
 require 'config.php';
 include 'layout/header.php';
+
+session_start();
+
+if(isset($_SESSION['is_logged_in'])) {
+    $loginSuccessUrl = $base_url.'loginSuccessPage.php';
+    header('Location: '.$loginSuccessUrl);
+}
+
 $uname = $password = $unameErr = $passErr = "";
 if($_SERVER['REQUEST_METHOD'] == "POST") {
     $uname = $_POST['uname'];
@@ -13,9 +21,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     }
     if ($unameErr=="" && $passErr=="") {
         if($uname == "test" && $password == "12345") {
+            session_start();
+            $_SESSION['is_logged_in'] = TRUE;
+            $_SESSION['uname'] = $uname;
+            
             $loginSuccessUrl = $base_url.'loginSuccessPage.php';
             header('Location: '.$loginSuccessUrl);
         } else {
+
             echo "Username or password is incorrect";
         }
     }
