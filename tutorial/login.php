@@ -1,7 +1,7 @@
 <?php
 require 'config.php';
 include 'layout/header.php';
-$uname = $password = $unameError = $passErr = "";
+$uname = $password = $unameErr = $passErr = "";
 if($_SERVER['REQUEST_METHOD'] == "POST") {
     $uname = $_POST['uname'];
     $password = $_POST['password'];
@@ -26,8 +26,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 <html>
     <body>
         <form action="" method="POST">
-            Enter your username: <input type="text" name="uname"><br>
-            Enter your username: <input type="password" name="password"><br>
+            Enter your username: <input type="text" name="uname" value=<?php echo $uname; ?>> <?php echo $unameErr; ?><br>
+            Enter your username: <input type="password" name="password" value=<?php echo $password; ?>><?php echo $passErr?><br>
             <input type="submit" value="submit">
         </form>
     </body>
