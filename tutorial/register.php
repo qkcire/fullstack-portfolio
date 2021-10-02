@@ -9,10 +9,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
     
     $conn = connection();
-    echo md5($password);
-    $sql = "INSERT INTO `users` ('id', 'email', 'mobile', 'password', 'forgot_password_code') VALUES('', '$email', '$mobile', '$password', 'null')";
-    echo $sql;
-    exit();
+    $password = md5($password);
+    $sql = "INSERT INTO `users` (`id`, `email`, `mobile`, `password`, `forgot_password_code`) VALUES ('0', '$email', '$mobile', '$password', 'null')";
+    $retval = mysqli_query($conn, $sql);
+    
+    if (!$retval) {
+        echo 'SOMETHING WENT WRONG::  '.mysqli_error($conn);
+        disconnect($conn);
+    } else {
+        echo "User registered successfully.";
+        disconnect($conn);
+        exit();
+    }
 }
 
 ?>
