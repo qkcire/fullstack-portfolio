@@ -20,15 +20,27 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
         $passErr = "password is required";
     }
     if ($unameErr=="" && $passErr=="") {
-        if($uname == "test" && $password == "12345") {
-            session_start();
+        $conn = connection();
+        $password = md5($password);
+        $sql = "SELECT id , email , mobile FROM users WHERE email='$uname' and password='$password'";
+        $retval =mysqli_query($conn, $sql);
+        
+        if (!$retval) {
+            echo 'Something wrong:: '.mysqli_error($conn);
+            disconnect($conn);
+        }
+        
+        $flag = 0;
+        while ($row = mysqli_fetch_array($retval, 1)) {
+            $flag = 1;
             $_SESSION['is_logged_in'] = TRUE;
             $_SESSION['uname'] = $uname;
             
             $loginSuccessUrl = $base_url.'loginSuccessPage.php';
             header('Location: '.$loginSuccessUrl);
-        } else {
-
+        }
+        
+        if ($flag == 0) {
             echo "Username or password is incorrect";
         }
     }
